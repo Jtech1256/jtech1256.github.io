@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joel Gashaw | Student · AI & Cybersecurity</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #4f46e5;
+      --accent-soft: #6366f1;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card: #0f172a;
+      --border: #1f2933;
+      --pill: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #4f46e5, transparent);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header animations */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #020617 0%, #020617 50%, #111827 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 22px 40px rgba(15, 23, 42, 0.8);
+      position: sticky;
+      top: 1rem;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideDown 0.6s ease-out 0.2s forwards;
+    }
+
+    @keyframes slideDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .logo-initials {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 20% 0, #4f46e5, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 1.05rem;
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      color: #e5e7eb;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo-initials:hover {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
+    }
+
+    .logo-text h1 {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .logo-text p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.8);
+      transform: translateY(-2px);
+    }
+
+    nav a.active {
+      border-color: rgba(129, 140, 248, 0.9);
+      background: radial-gradient(circle at 0 0, #4f46e5, #1d2438);
+      color: #e5e7eb;
+    }
+
+    main {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Scroll-triggered animations */
+    section {
+      background: linear-gradient(145deg, #020617 0%, #020617 35%, #020617 60%, #020617 100%);
+      border-radius: 18px;
+      padding: 1.5rem 1.4rem 1.6rem;
+      border: 1px solid rgba(30, 64, 175, 0.45);
+      box-shadow: 0 22px 40px rgba(15, 23, 42, 0.8);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section + section {
+      border-color: rgba(30, 64, 175, 0.25);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.7);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4f46e5, #a5b4fc);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible .section-header h2::after {
+      width: 100%;
+    }
+
+    .section-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.7fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .hero-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #fef3c7, #a5b4fc, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200% auto;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% {
+        background-position: 0% center;
+      }
+      50% {
+        background-position: 100% center;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      color: #cbd5f5;
+    }
+
+    .hero-body em {
+      font-style: normal;
+      color: #a5b4fc;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .hero-body em:hover {
+      color: #fef3c7;
+      text-shadow: 0 0 10px rgba(165, 180, 252, 0.5);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: scale(0.8);
+      animation: popIn 0.5s ease-out forwards;
+    }
+
+    .pill:nth-child(1) { animation-delay: 0.4s; }
+    .pill:nth-child(2) { animation-delay: 0.5s; }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .pill:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: rgba(129, 140, 248, 0.6);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .pill span {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+      }
+    }
+
+    .hero-aside {
+      border-radius: 16px;
+      padding: 1.1rem 1rem;
+      background: radial-gradient(circle at 0 0, #1d253f, #020617);
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-aside:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(79, 70, 229, 0.3);
+      border-color: rgba(129, 140, 248, 0.8);
+    }
+
+    .hero-aside-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .hero-quote {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .hero-quote span {
+      color: #a5b4fc;
+      font-weight: 500;
+    }
+
+    .hero-quote small {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .hero-aside-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .contact-links a {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .contact-links a:hover {
+      border-color: rgba(129, 140, 248, 0.9);
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .contact-links a span {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-links a:hover span:first-child {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtext {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+    }
+
+    li {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    section.visible li:nth-child(1) { transition-delay: 0.1s; }
+    section.visible li:nth-child(2) { transition-delay: 0.2s; }
+    section.visible li:nth-child(3) { transition-delay: 0.3s; }
+    section.visible li:nth-child(4) { transition-delay: 0.4s; }
+
+    .item-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .item-left {
+      font-weight: 500;
+      color: #e5e7eb;
+      transition: color 0.3s ease;
+    }
+
+    li:hover .item-left {
+      color: #a5b4fc;
+    }
+
+    .item-right {
+      font-size: 0.8rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .item-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #cbd5f5;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tag:hover {
+      border-color: rgba(129, 140, 248, 0.6);
+      background: rgba(79, 70, 229, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.3rem;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      color: #9ca3af;
+      background: rgba(15, 23, 42, 0.96);
+      transition: all 0.3s ease;
+    }
+
+    .badge:hover {
+      border-color: rgba(129, 140, 248, 0.6);
+      color: #a5b4fc;
+      transform: scale(1.05);
+    }
+
+    .story-block {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .story-block p {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible .story-block p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section.visible .story-block p:nth-child(1) { transition-delay: 0.1s; }
+    section.visible .story-block p:nth-child(2) { transition-delay: 0.2s; }
+    section.visible .story-block p:nth-child(3) { transition-delay: 0.3s; }
+
+    .story-block p + p {
+      color: #a5b4fc;
+    }
+
+    .story-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.35rem;
+    }
+
+    .story-quote {
+      font-size: 0.86rem;
+      color: #9ca3af;
+      border-left: 2px solid rgba(129, 140, 248, 0.6);
+      padding-left: 0.6rem;
+      margin-top: 0.3rem;
+      transition: all 0.4s ease;
+    }
+
+    .story-quote:hover {
+      border-left-width: 4px;
+      padding-left: 0.8rem;
+      color: #a5b4fc;
+    }
+
+    .projects-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      border-radius: 14px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 0.9rem 0.95rem;
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.24), #020617);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    section.visible .project-card {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    section.visible .project-card:nth-child(1) { transition-delay: 0.1s; }
+    section.visible .project-card:nth-child(2) { transition-delay: 0.2s; }
+    section.visible .project-card:nth-child(3) { transition-delay: 0.3s; }
+    section.visible .project-card:nth-child(4) { transition-delay: 0.4s; }
+
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 12px 32px rgba(79, 70, 229, 0.4);
+    }
+
+    .project-card h4 {
+      font-size: 0.92rem;
+      color: #e5e7eb;
+      transition: color 0.3s ease;
+    }
+
+    .project-card:hover h4 {
+      color: #a5b4fc;
+    }
+
+    .project-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .project-card p {
+      font-size: 0.86rem;
+      color: #cbd5f5;
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    footer span {
+      opacity: 0.9;
+    }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #4f46e5, #a5b4fc, #38bdf8);
+      z-index: 100;
+      transition: width 0.1s ease-out;
+    }
+
+    @media (max-width: 860px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      .hero-grid,
+      .two-col,
+      .experience-grid,
+      .projects-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-aside {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding-inline: 1rem;
+      }
+
+      header {
+        top: 0.5rem;
+      }
+
+      section {
+        padding: 1.25rem 1.1rem 1.4rem;
+      }
+
+      .hero-title {
+        font-size: 1.35rem;
+      }
+    }
+
+    /* Cursor trail effect */
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.5), transparent);
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background particles -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Cursor trail -->
+  <div class="cursor-trail" id="cursor-trail"></div>
+
+  <div class="page">
+    <header>
+      <div class="logo-block">
+        <div class="logo-initials">JG</div>
+        <div class="logo-text">
+          <h1>Joel Gashaw</h1>
+          <p>Student · AI &amp; Cybersecurity</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#about" class="active">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Highlights</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ABOUT / HERO -->
+      <section id="about">
+        <div class="section-header">
+          <h2>Profile</h2>
+          <p class="section-tagline">Curious builder focused on secure, human-centered tech.</p>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <h2 class="hero-title">
+              <span>Piece by piece, I build systems that serve people.</span>
+            </h2>
+            <p class="hero-subtitle">
+              Rising senior at Chantilly High School in Virginia, exploring the intersection of AI, cybersecurity, and real-world impact.
+            </p>
+            <p class="hero-body">
+              My path into technology started with a stubborn PC that refused to boot and a family mantra in Amharic—<em>Yene Gegna</em>, "You are my hero, you can make it happen."
+              That mindset guides how I learn, lead, and build: with persistence, clarity, and a focus on who technology is really for.
+            </p>
+            <div class="hero-meta">
+              <div class="pill">
+                <span></span>
+                Open to internships &amp; research in AI and cybersecurity.
+              </div>
+              <div class="pill">
+                Class of 2026 · Chantilly High School · GPA 4.14.
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-aside">
+            <div>
+              <div class="hero-aside-label">Family mantra</div>
+              <p class="hero-quote">
+                <span>"Yene Gegna"</span> · "You are my hero, you can make it happen."
+                <small>Rooted in my parents' journey from Ethiopia to the U.S., this phrase reminds me that success rarely happens on the first try—it's built through persistence and service.</small>
+              </p>
+            </div>
+            <div class="hero-aside-footer" id="contact">
+              <div>
+                <div class="story-label">Contact</div>
+                <div class="contact-links">
+                  <a href="mailto:joel.gashaw23@gmail.com">
+                    <span>✉</span> <span>Email</span>
+                  </a>
+                  <a href="tel:15715847439">
+                    <span>📞</span> <span>Call</span>
+                  </a>
+                  <a href="#">
+                    <span>📍</span> <span>Chantilly, VA</span>
+                  </a>
+                </div>
+              </div>
+              <div>
+                <div class="story-label">Focus</div>
+                <span>AI safety · Cybersecurity · Networked systems.</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <div class="section-header">
+          <h2>Experience</h2>
+          <p class="section-tagline">Learning through labs, real users, and real teams.</p>
+        </div>
+
+        <div class="experience-grid">
+          <div>
+            <h3>Recent roles</h3>
+            <p class="subtext">
+              I like roles where I have to explain complex ideas clearly, design from first principles, and stay patient when things break.
+            </p>
+            <ul>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Technology Intern · Bemanda Technology</span>
+                  <span class="item-right">Silver Spring, MD · 2025</span>
+                </div>
+                <p class="item-meta">
+                  Designed and delivered talks on how AI connects to everyday IT work, making advanced concepts approachable for Ethiopian professionals.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">AI education</span>
+                  <span class="badge">Technical storytelling</span>
+                </div>
+              </li>
+
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Lead Coach · CYA Youth Basketball</span>
+                  <span class="item-right">Chantilly, VA · 2025</span>
+                </div>
+                <p class="item-meta">
+                  Coached a 5th-grade team, breaking plays into small drills, building confidence, and teaching time management on and off the court.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">Leadership</span>
+                  <span class="badge">Mentoring</span>
+                </div>
+              </li>
+
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Rapporteur · CHMUN (UNESCO Committee)</span>
+                  <span class="item-right">2025</span>
+                </div>
+                <p class="item-meta">
+                  Summarized debates, documented policy positions, and turned complex discussions into clear, actionable reports.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">Policy writing</span>
+                  <span class="badge">Attention to detail</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Programs & Activities</h3>
+            <p class="subtext">
+              Structured programs keep me accountable and surround me with people who also want to push what's possible.
+            </p>
+            <ul>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">GMU Tech &amp; Policy Institute</span>
+                  <span class="item-right">Summer Scholar</span>
+                </div>
+                <p class="item-meta">
+                  Completed college-level labs, defended designs, and debated ethical and policy implications of emerging technologies while earning three college credits.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">Tech policy</span>
+                  <span class="badge">Ethics in AI</span>
+                </div>
+              </li>
+
+              <li>
+                <div class="item-main">
+                  <span class="item-left">NOVA IET Bridge Program</span>
+                  <span class="item-right">Participant</span>
+                </div>
+                <p class="item-meta">
+                  Gained exposure to emerging technologies through industry visits, including Iron Mountain and Micron, and explored pathways into STEM careers.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">Industry exposure</span>
+                </div>
+              </li>
+
+              <li>
+                <div class="item-main">
+                  <span class="item-left">School &amp; Community</span>
+                  <span class="item-right">Ongoing</span>
+                </div>
+                <p class="item-meta">
+                  National Honor Society, AI Club, Black Student Association, church volunteer, and community runs centered on health and awareness.
+                </p>
+                <div class="badge-row">
+                  <span class="badge">Service</span>
+                  <span class="badge">Community</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS & STORY -->
+      <section id="skills">
+        <div class="section-header">
+          <h2>Skills & Story</h2>
+          <p class="section-tagline">Technical foundations anchored in patience and persistence.</p>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <h3>Technical</h3>
+            <p class="subtext">
+              I like understanding what's happening under the hood—from hardware to code to the policies that shape how systems are used.
+            </p>
+            <ul>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Programming</span>
+                  <span class="item-right">IT Specialist Certified</span>
+                </div>
+                <div class="tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Java</span>
+                </div>
+              </li>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Cybersecurity</span>
+                  <span class="item-right">Foundations</span>
+                </div>
+                <p class="item-meta">
+                  Secure systems, vulnerability awareness, and a growing focus on AI and network security.
+                </p>
+                <div class="tags">
+                  <span class="tag">Cybersecurity IT Specialist</span>
+                  <span class="tag">Ethical AI</span>
+                </div>
+              </li>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Hardware &amp; Troubleshooting</span>
+                  <span class="item-right">Hands-on</span>
+                </div>
+                <p class="item-meta">
+                  PC assembly, diagnostics, repair, and methodical debugging when systems fail to boot.
+                </p>
+                <div class="tags">
+                  <span class="tag">Custom PC builds</span>
+                  <span class="tag">System diagnostics</span>
+                </div>
+              </li>
+              <li>
+                <div class="item-main">
+                  <span class="item-left">Soft skills</span>
+                  <span class="item-right">Team-oriented</span>
+                </div>
+                <div class="tags">
+                  <span class="tag">Communication</span>
+                  <span class="tag">Time management</span>
+                  <span class="tag">Teamwork</span>
+                  <span class="tag">Creative problem-solving</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>My framework</h3>
+            <p class="subtext">
+              "Yene Gegna" reminds me that being a hero isn't about doing everything alone—it's about helping others find their strength.
+            </p>
+            <div class="story-block">
+              <p>
+                When my second PC build stalled on a blank screen, I almost gave up and scheduled a repair.
+                Instead, I went back piece by piece, guided by my parents' stories of starting over in a new country and their reminder that effort matters even when the outcome is uncertain.
+              </p>
+              <p>
+                That same approach shows up when I coach, debug, or design systems: break problems into smaller parts, stay patient, and keep the people you're serving at the center.
+              </p>
+              <p class="story-quote">
+                Long-term, I want to design AI systems that are secure, fair, and aligned with communities who are often left out of the design process—especially in areas like healthcare and cybersecurity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS / HIGHLIGHTS -->
+      <section id="projects">
+        <div class="section-header">
+          <h2>Highlights</h2>
+          <p class="section-tagline">Moments that shaped how I build and lead.</p>
+        </div>
+
+        <div class="projects-list">
+          <article class="project-card">
+            <h4>"Dead" PC, living lesson</h4>
+            <p class="project-meta">Personal project · Hardware · Problem-solving</p>
+            <p>
+              A failed custom PC build became my crash course in systematic debugging, patience, and refusing to outsource the hard part too early.
+              After days of testing components and revisiting assumptions, I eventually found and fixed the issue—and realized how much I enjoy deep technical problem-solving.
+            </p>
+            <div class="tags">
+              <span class="tag">PC assembly</span>
+              <span class="tag">Debugging</span>
+              <span class="tag">Resilience</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <h4>Coaching from the sidelines</h4>
+            <p class="project-meta">CYA Youth Basketball · Leadership</p>
+            <p>
+              Coaching ten energetic fifth graders taught me that real growth comes from small adjustments, consistent feedback, and celebrating incremental wins.
+              Those same habits now shape how I run group projects and help peers stay organized and confident.
+            </p>
+            <div class="tags">
+              <span class="tag">Youth mentorship</span>
+              <span class="tag">Team culture</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <h4>From code to policy</h4>
+            <p class="project-meta">GMU Tech &amp; Policy Institute</p>
+            <p>
+              At George Mason, I moved beyond just "making things work" to asking who a system serves, who it might leave out, and how policy can guide responsible innovation.
+              Presenting and defending designs pushed me to communicate clearly with both technical and non-technical audiences.
+            </p>
+            <div class="tags">
+              <span class="tag">Ethical tech</span>
+              <span class="tag">Public interest</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <h4>Recognition &amp; certifications</h4>
+            <p class="project-meta">Academic &amp; professional milestones</p>
+            <p>
+              IT Specialist certifications in Cybersecurity, Python, and Java, a Workplace Readiness Skills credential, and a 2nd-place science fair project reflect how I turn curiosity into structured learning.
+            </p>
+            <div class="tags">
+              <span class="tag">IT Specialist: Cybersecurity</span>
+              <span class="tag">IT Specialist: Python</span>
+              <span class="tag">IT Specialist: Java</span>
+              <span class="tag">Science fair award</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <span>© <span id="year"></span> Joel Gashaw. All rights reserved.</span>
+        <span>Built to grow with me—from my first PC build to future work in AI and cybersecurity.</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // === SCROLL PROGRESS BAR ===
+    const scrollProgress = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+
+    // === INTERSECTION OBSERVER FOR SECTIONS ===
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // === SMOOTH SCROLL + ACTIVE NAV ===
+    const links = document.querySelectorAll("nav a");
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 90,
+              behavior: "smooth",
+            });
+          }
+        }
+        links.forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+
+    // === ANIMATED PARTICLES ===
+    const particlesContainer = document.getElementById('particles');
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      const size = Math.random() * 4 + 2;
+      const left = Math.random() * 100;
+      const duration = Math.random() * 10 + 15;
+      const delay = Math.random() * 5;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${left}%`;
+      particle.style.animationDuration = `${duration}s`;
+      particle.style.animationDelay = `${delay}s`;
+      
+      particlesContainer.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, (duration + delay) * 1000);
+    }
+
+    // Create initial particles
+    for (let i = 0; i < 20; i++) {
+      setTimeout(createParticle, i * 300);
+    }
+
+    // Continuously add particles
+    setInterval(createParticle, 2000);
+
+    // === CURSOR TRAIL (desktop only) ===
+    const cursorTrail = document.getElementById('cursor-trail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    if (window.innerWidth > 768) {
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorTrail.style.opacity = '1';
+      });
+
+      function animateTrail() {
+        trailX += (mouseX - trailX) * 0.1;
+        trailY += (mouseY - trailY) * 0.1;
+        
+        cursorTrail.style.left = trailX + 'px';
+        cursorTrail.style.top = trailY + 'px';
+        
+        requestAnimationFrame(animateTrail);
+      }
+      animateTrail();
+    }
+
+    // === UPDATE YEAR ===
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // === PARALLAX EFFECT ON HERO ===
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroAside = document.querySelector('.hero-aside');
+      if (heroAside && scrolled < 800) {
+        heroAside.style.transform = `translateY(${scrolled * 0.3}px)`;
+      }
+    });
+  </script>
+</body>
+</html>
