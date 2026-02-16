@@ -429,6 +429,7 @@
       gap: 0.5rem;
     }
 
+    /* Tooltip functionality for contact links */
     .contact-links a {
       font-size: 0.78rem;
       padding: 0.35rem 0.6rem;
@@ -439,6 +440,58 @@
       align-items: center;
       gap: 0.4rem;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Tooltip text - hidden by default */
+    .contact-links a::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-5px);
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #ffffff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.4);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      z-index: 100;
+    }
+
+    /* Tooltip arrow */
+    .contact-links a::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: #4f46e5;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+
+    /* Show tooltip on hover */
+    .contact-links a:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .contact-links a:hover::before {
+      opacity: 1;
+      visibility: visible;
     }
 
     .contact-links a:hover {
@@ -738,6 +791,23 @@
       .hero-aside {
         order: -1;
       }
+
+      /* Adjust tooltip position on mobile */
+      .contact-links a::after {
+        left: auto;
+        right: 0;
+        transform: translateX(0) translateY(-5px);
+      }
+
+      .contact-links a:hover::after {
+        transform: translateX(0) translateY(0);
+      }
+
+      .contact-links a::before {
+        left: auto;
+        right: 20px;
+        transform: translateX(0);
+      }
     }
 
     @media (max-width: 640px) {
@@ -818,7 +888,7 @@
               Rising senior at Chantilly High School in Virginia, exploring the intersection of AI, cybersecurity, and real-world impact.
             </p>
             <p class="hero-body">
-              My path into technology started with a stubborn PC that refused to boot and a family mantra in Amharic—<em>Yene Gegna</em>, "You are my hero, you can make it happen."
+              My path into technology started with a stubborn PC that refused to boot and a family mantra in Amharic—<em>Yene Jegina</em>, "You are my hero, you can make it happen."
               That mindset guides how I learn, lead, and build: with persistence, clarity, and a focus on who technology is really for.
             </p>
             <div class="hero-meta">
@@ -833,31 +903,25 @@
           </div>
 
           <aside class="hero-aside">
-            <div>
-              <div class="hero-aside-label">Family mantra</div>
-              <p class="hero-quote">
-                <span>"Yene Gegna"</span> · "You are my hero, you can make it happen."
-                <small>Rooted in my parents' journey from Ethiopia to the U.S., this phrase reminds me that success rarely happens on the first try—it's built through persistence and service.</small>
-              </p>
-            </div>
+            
             <div class="hero-aside-footer" id="contact">
               <div>
                 <div class="story-label">Contact</div>
                 <div class="contact-links">
-                  <a href="mailto:joel.gashaw23@gmail.com">
+                  <a href="mailto:joel.gashaw23@gmail.com" data-tooltip="joel.gashaw23@gmail.com">
                     <span>✉</span> <span>Email</span>
                   </a>
-                  <a href="tel:15715847439">
+                  <a href="tel:15715847439" data-tooltip="(571) 584-7439">
                     <span>📞</span> <span>Call</span>
                   </a>
-                  <a href="#">
-                    <span>📍</span> <span>Chantilly, VA</span>
+                  <a href="#" data-tooltip="Chantilly, Virginia">
+                    <span>📍</span> <span>Location</span>
                   </a>
                 </div>
               </div>
               <div>
                 <div class="story-label">Focus</div>
-                <span>AI safety · Cybersecurity · Networked systems.</span>
+                <span>AI · Cybersecurity · Networked systems.</span>
               </div>
             </div>
           </aside>
@@ -1040,9 +1104,7 @@
 
           <div>
             <h3>My framework</h3>
-            <p class="subtext">
-              "Yene Gegna" reminds me that being a hero isn't about doing everything alone—it's about helping others find their strength.
-            </p>
+            
             <div class="story-block">
               <p>
                 When my second PC build stalled on a blank screen, I almost gave up and scheduled a repair.
